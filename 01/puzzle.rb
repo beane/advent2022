@@ -11,4 +11,4 @@ input.each do |line|
   end
 end
 
-pp elves.max
+pp elves.sort.reverse.take(3).sum

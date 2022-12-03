@@ -6,13 +6,13 @@ LOSE = 'X'
 DRAW = 'Y'
 WIN = 'Z'
 
-WINNING_MOVES = {
+LOSING_MOVES = {
   ROCK => SCISSORS,
   PAPER => ROCK,
   SCISSORS => PAPER
 }
 
-MOVE_TO_WIN = WINNING_MOVES.invert
+WINNING_MOVES = LOSING_MOVES.invert
 
 SCORES = {
   ROCK => 1,
@@ -27,11 +27,11 @@ input.each do |line|
   move, result = line.split(' ')
 
   if result == WIN
-    score = score + 6 + SCORES[MOVE_TO_WIN[move]]
+    score = score + 6 + SCORES[WINNING_MOVES[move]]
   elsif result == DRAW
     score = score + 3 + SCORES[move]
   elsif result == LOSE
-    score += SCORES[WINNING_MOVES[move]]
+    score += SCORES[LOSING_MOVES[move]]
   end
 end
 

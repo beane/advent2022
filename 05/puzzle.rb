@@ -24,10 +24,9 @@ stacks = stacks.map { |stack| stack.compact }
 instructions.each do |instruction|
   _, n, _, from, _, to = instruction.split.map(&:to_i)
 
-  n.times do
-    crate = stacks[from-1].pop
-    stacks[to-1] << crate
-  end
+  stacks[to-1] += stacks[from-1].last n
+  stack_height = stacks[from-1].length
+  stacks[from-1] = stacks[from-1].take(stack_height-n)
 end
 
 puts stacks.map(&:last).join

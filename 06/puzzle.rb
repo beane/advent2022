@@ -13,7 +13,7 @@ input[0].chars.each_with_index do |char, i|
 
   uniqs << char
 
-  if uniqs.length == 4
+  if uniqs.length == 14
     index = i
     break
   end

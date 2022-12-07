@@ -21,7 +21,7 @@ class DirNode < Node
   end
 
   def to_s
-    "DirNode (name: #{name} | parent: #{parent.name rescue 'parentless'})"
+    "DirNode (name: #{name} | parent: #{parent.name rescue 'parentless'} | size: #{size})"
   end
 
   def directory?; true; end
@@ -36,7 +36,7 @@ class FileNode < Node
   end
 
   def to_s
-    "FileNode (name: #{name} | parent: #{parent.name rescue 'parentless'})"
+    "FileNode (name: #{name} | parent: #{parent.name rescue 'parentless'} | size: #{size})"
   end
 
   def file?; true; end
@@ -83,13 +83,31 @@ input.each do |line|
   end
 end
 
-def find_directories_of_max_size(node, max_size)
+def directories_of_max_size(node, max_size)
   directories = []
   directories << node if node.size <= max_size
   node.children.filter(&:directory?).each do |child|
-    directories += find_directories_of_max_size(child, max_size)
+    directories += directories_of_max_size(child, max_size)
   end
   directories
 end
 
-puts find_directories_of_max_size(root, 100000).map(&:size).sum
+def directories_of_min_size(node, min_size)
+  directories = []
+  directories << node if node.size >= min_size
+  node.children.filter(&:directory?).each do |child|
+    directories += directories_of_min_size(child, min_size)
+  end
+  directories
+end
+
+# part 1
+puts directories_of_max_size(root, 100000).map(&:size).sum
+
+DISK_SPACE = 70000000
+SPACE_NEEDED = 30000000
+
+directory_size = root.size
+target_disk_space = SPACE_NEEDED - (DISK_SPACE - directory_size)
+
+puts directories_of_min_size(root, target_disk_space).map(&:size).sort.first

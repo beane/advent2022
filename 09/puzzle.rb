@@ -30,8 +30,9 @@ DOWN = 'D'
 input = File.readlines('input').map &:strip
 
 h_pos = [0,0]
-t_pos = [0,0]
-positions = [t_pos]
+follower_positiions = Array.new(9) { [0,0] }
+
+positions = [follower_positiions.last]
 
 input.each do |line|
   dir, num = line.split(' ')
@@ -41,36 +42,48 @@ input.each do |line|
       hx,hy = h_pos
       hy+=1
       h_pos = [hx,hy]
-      t_pos = update_tail_pos(h_pos, t_pos)
+      f_pos = h_pos
+      follower_positiions = follower_positiions.map do |t_pos|
+        f_pos = update_tail_pos(f_pos, t_pos)
+      end
 
-      positions << t_pos
+      positions << f_pos
     end
   elsif dir == LEFT
     count.times do
       hx,hy = h_pos
       hx-=1
       h_pos = [hx,hy]
-      t_pos = update_tail_pos(h_pos, t_pos)
+      f_pos = h_pos
+      follower_positiions = follower_positiions.map do |t_pos|
+        f_pos = update_tail_pos(f_pos, t_pos)
+      end
 
-      positions << t_pos
+      positions << f_pos
     end
   elsif dir == RIGHT
     count.times do
       hx,hy = h_pos
       hx+=1
       h_pos = [hx,hy]
-      t_pos = update_tail_pos(h_pos, t_pos)
+      f_pos = h_pos
+      follower_positiions = follower_positiions.map do |t_pos|
+        f_pos = update_tail_pos(f_pos, t_pos)
+      end
 
-      positions << t_pos
+      positions << f_pos
     end
   elsif dir == DOWN
     count.times do
       hx,hy = h_pos
       hy-=1
       h_pos = [hx,hy]
-      t_pos = update_tail_pos(h_pos, t_pos)
+      f_pos = h_pos
+      follower_positiions = follower_positiions.map do |t_pos|
+        f_pos = update_tail_pos(f_pos, t_pos)
+      end
 
-      positions << t_pos
+      positions << f_pos
     end
   end
 end

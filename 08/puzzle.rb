@@ -6,25 +6,21 @@ def visible_tree_score(tree, i, row)
   p1 = []
   p2 = []
 
-  finished = false
   row[0...i].reverse.each do |el|
-    break if finished
     if tree > el
       p1 << el
     elsif tree <= el
       p1 << el
-      finished = true
+      break
     end
   end
 
-  finished = false
   row[i+1..-1].each do |el|
-    break if finished
     if tree > el
       p2 << el
     elsif tree <= el
       p2 << el
-      finished = true
+      break
     end
   end
 

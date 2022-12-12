@@ -12,25 +12,22 @@ class CPU
     @buffer=[]
   end
 
-  def tick1(&block)
+  def tick1
     self.cycle+=1
     if (cycle-20) % 40 == 0
       self.signal_strength_sum += signal_strength
     end
-    block.call if block
   end
 
-  def tick2(&block)
+  def tick2
     draw
     self.cycle+=1
-    block.call if block
   end
 
   def addx(n)
     tick2
-    tick2 do
-      self.x+=n
-    end
+    tick2
+    self.x+=n
   end
 
   def noop
